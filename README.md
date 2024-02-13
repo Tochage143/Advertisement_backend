@@ -4,7 +4,7 @@ Welcome to the my Api API. This API provides information about colleges, news, e
 
 ## Routes
 
-### 1. Home
+### 1. Welcome Route
 
 - **Endpoint:** `/`
 - **Method:** `GET`
@@ -14,7 +14,20 @@ Welcome to the my Api API. This API provides information about colleges, news, e
 ```bash
 "http://localhost:81/" 
 ```
-### 2. Search
+
+### 2. Home
+
+- **Endpoint:** `/Home`
+- **Method:** `GET`
+- **Description:** This return home page data like top cities, top exam , etch 
+
+### Example:
+```bash
+"http://localhost:81/Home" 
+```
+
+
+### 3. Search
 
 - **Endpoint:** `/search`
 - **Method:** `GET`
@@ -26,9 +39,9 @@ Welcome to the my Api API. This API provides information about colleges, news, e
 ```bash
 "http://localhost:81/search?q=deogiri college" 
 ```
-### 3. College 
+### 4. College 
 
-- **Endpoint:** `/`
+- **Endpoint:** `/college`
 - **Method:** `GET`
 - **Parameters:**
   - `id` (string): This take the id (string) of the college
@@ -40,7 +53,7 @@ Welcome to the my Api API. This API provides information about colleges, news, e
 ```
 
 
-### 4. College Name
+### 5. College Name
 #### **Note:** `Do not use this route because it only returns results when college is correct and accurate.` 
 
 - **Endpoint:** `/college_name`
@@ -53,7 +66,7 @@ Welcome to the my Api API. This API provides information about colleges, news, e
 "http://localhost:81/college_name?name=diems deogiri institute of engineering and management studies maharashtra aurangabad home"
 ```
 
-### 5. College List
+### 6. College List
 
 - **Endpoint:** `/college_list/<string:list_url>`
 - **Method:** `GET`
@@ -67,7 +80,7 @@ Welcome to the my Api API. This API provides information about colleges, news, e
 "http://localhost:81/college_list/management-colleges?id=13&page=1"
 ```
 
-### 6. News
+### 7. News
 
 - **Endpoint:**  `/news`
 - **Method:** GET
@@ -81,14 +94,14 @@ Welcome to the my Api API. This API provides information about colleges, news, e
 "http://localhost:81/news?new_type=college&page=2"
 ```
 
-### 7. Exams
+### 8. Exams
 
-- **Endpoint:**  `/news`
+- **Endpoint:**  `/exams/id`
 - **Method:** GET
-- **Description:** Returns information about the latest exams.
-
+- **Parameters:**
+    - `exam_tabs`(string) : take the exam tabs url and return the exam data 
+- **Description:** Returns information about the latest exams and also return exam list 
 ### Example
 ```bash
-"http://localhost:81/exams"
+"http://localhost:81/exams/exams/iiad-entrance-exam?exam_tabs=syllabus"
 ```
-
