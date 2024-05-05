@@ -13,3 +13,7 @@ deploymentTarget = "cloudrun"
 [auth]
 pageEnabled = false
 buttonEnabled = false
+
+[[ports]]
+localPort = 81
+externalPort = 80

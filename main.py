@@ -72,7 +72,7 @@ def Search():
 
 
 # This the college route and take college id and return college information
-@college.route('/college')
+@app.route('/college')
 def College():
   id = request.args.get("id")
   if id is None:
@@ -184,30 +184,6 @@ def News():
     return make_response(jsonify({'error': str(e)}, 500), )
 
 
-# # Route is exams give the lastest exam information
-# @app.route('/exams')
-# def Exams():
-#   exmas_type = request.args.get('type', default=None)
-#   try:
-#     if exmas_type is None:
-#       # https://zollege.in/napi/c/nge/exams/cat/overview
-#        url = 'https://zollege.in/napi/c/nge/exams/jee-main'
-#        res = requests.get("https://zollege.in/napi/c/nge/exams/", headers=headers)
-#        if res.status_code == 200:
-#              return jsonify(res.json())
-#        else:
-#              return make_response(jsonify({'error': "There is the problem "}), 404)
-#     else :
-#       url = f'https://zollege.in/napi/c/nge/{exmas_type}'
-#       res = requests.get(url, headers=headers)
-#       if res.status_code == 200:
-#         return jsonify(res.json())
-#       else:
-#         return make_response(jsonify({'error': "There is the problem "}), 500)
-#   except Exception as e:
-#     return make_response(jsonify({'error': str(e)}, 500), )
-
-
 @app.route('/exams/<path:exam_url>')
 def Exams(exam_url):
   try:
@@ -248,4 +224,61 @@ def Streams():
     return make_response(jsonify({'error': str(e)}, 500), )
 
 
-app.run(host='0.0.0.0', port=81, debug=True)
+@app.route('/course/<path:course_id>')
+def Courses(course_id):
+  try:
+    decoded_url = urllib.parse.unquote(course_id).replace('courses/', '')
+
+    res = requests.get(f"https://zollege.in/web-api/courses/{decoded_url}",
+                       headers=headers)
+    if res.status_code == 200:
+      return jsonify(res.json())
+    else:
+      return make_response(jsonify({'error': "There is the problem "}), 500)
+  except Exception as e:
+    return make_response(jsonify({'error': str(e)}, 500), )
+
+
+def encode_data(json_Data):
+  json_string = json.dumps(json_Data)
+  encoded_bytes = base64.b64encode(json_string.encode('utf-8'))
+  encoded_string = encoded_bytes.decode('utf-8')
+  return encoded_string
+
+
+@app.route('/filterurl', methods=['POST'])
+def Filterurl():
+  try:
+    # request_data = { "stream": "3", "course_tag_id": "12", "state": "10" }
+    request_data = request.json
+    encode_string = encode_data(request_data)
+    res = requests.get(
+        f"https://zollege.in/web-api/listing-url?data={encode_string}",
+        headers=headers)
+    if res.status_code == 200:
+      return res.json()
+    else:
+      return make_response(
+          jsonify({'error': 'Invalid request data. URL missing.'}), 400)
+  except Exception as e:
+    return make_response(jsonify({'error': str(e)}), 500)
+
+
+@app.route('/filter/<path:Filter_id>')
+def Filter(Filter_id):
+  try:
+    decoded_url = urllib.parse.unquote(Filter_id)
+    filter_encoded_string = encode_data({'url': decoded_url})
+    res = requests.get(
+        f"https://zollege.in/web-api/listing-filters?data={filter_encoded_string}",
+        headers=headers)
+    if res.status_code == 200:
+      return res.json()
+    else:
+      return make_response(
+          jsonify({'error': 'there is problem with the api '}), 500)
+  except Exception as e:
+    return make_response(jsonify({'error': str(e)}), 500)
+
+
+app.run(host='0.0.0.0', port=81, debug=False)
