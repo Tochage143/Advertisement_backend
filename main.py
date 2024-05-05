@@ -281,4 +281,5 @@ def Filter(Filter_id):
     return make_response(jsonify({'error': str(e)}), 500)
 
 
-app.run(host='0.0.0.0', port=81, debug=False)
+if __name__ == "__main__":
+  app.run(host='0.0.0.0', port=81, debug=False)
