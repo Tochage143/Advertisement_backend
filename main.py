@@ -9,8 +9,21 @@ import urllib.parse
 app = Flask(__name__)
 CORS(app, origins=['http://localhost:5173'])
 headers = {
-    'User-Agent':
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36',
+    'Accept': '*/*',
+    'Accept-Encoding': 'gzip, deflate, br, zstd',
+    'Accept-Language': 'en-US,en;q=0.9,en-IN;q=0.8',
+    'Cache-Control': 'max-age=0',
+     # Add your cookie data here
+    'Dnt': '1',
+    'Priority': 'u=1, i',
+    'Referer': 'https://zollege.in/',
+    'Sec-Ch-Ua': '"Chromium";v="124", "Microsoft Edge";v="124", "Not-A.Brand";v="99"',
+    'Sec-Ch-Ua-Mobile': '?0',
+    'Sec-Ch-Ua-Platform': '"Windows"',
+    'Sec-Fetch-Dest': 'empty',
+    'Sec-Fetch-Mode': 'cors',
+    'Sec-Fetch-Site': 'same-origin',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0'
 }
 searchurl = "https://zollege.in/global-search?page_type=in&countryId=2&term="
 collegeurl = "https://zollege.in/web-api/"
